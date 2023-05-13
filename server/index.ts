@@ -1,27 +1,19 @@
-// import dotenv from "dotenv";
-import Fastify from "fastify";
-import userRoutes from "./src/modules/user/user.route"
+import express from "express";
+import router from "./routes";
+import deserializeUser from "./middleware/deserializeUser";
 
-// dotenv.config();
-// const port = process.env.PORT;
-const app = Fastify();
+const app = express();
 
+app.use(express.json());
 
+app.use(deserializeUser);
 
-app.get('/', async function (request, response) {
-    return { status: "Ok" }
-})
+app.use(router);
 
+const port = config.get("port");
 
-async function main() {
-    app.register(userRoutes, { prefix: "don't be a dramatic" })
-    try {
-        app.listen(3000, "0.0.0.0");
-        console.log(`⚡️[server]: Server is running at http://localhost:${3000}`)
-    } catch (error) {
-        console.error(error)
-        process.exit(1);
-    }
-}
+app.listen(port, () => {
+    console.info(`App started at http://localhost:${port}`);
 
-main()
+    // connectToDb();
+});

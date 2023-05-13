@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^6.0.0-beta.0",
+    "@fastify/jwt": "^6.7.1",
     "@prisma/client": "^3.10.0",
     "@types/nodemon": "^1.19.2",
     "dotenv": "^16.0.3",
