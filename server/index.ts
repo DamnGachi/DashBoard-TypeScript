@@ -1,14 +1,19 @@
+import { connectProducer, disconnectFromKafka } from "./src/utils/kafka";
 import express from "express";
-import router from "./routes";
-import deserializeUser from "./middleware/deserializeUser";
+import router from "./routes/index";
+import config from "config";
+import { connectToDb } from "./src/database/db";
+require("dotenv").config();
 
 const app = express();
 
 app.use(express.json());
 
-app.use(deserializeUser);
 
 app.use(router);
+connectToDb();
+
+connectProducer();
 
 const port = config.get("port");
 

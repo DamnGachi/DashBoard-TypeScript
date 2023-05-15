@@ -1,9 +1,19 @@
-import Fastify from "fastify";
+import express from "express";
+import {
+    createUserHandler,
+} from "../src/controller/user.controller";
 
-const router = Fastify();
+import {
+    createUserSchema,
+} from "../src/dto/user.schema";
+import validateResource from "../src/middleware/validateResource";
 
-router.get('/nihao', (req, res) => {
-    res.send("HELLO");
-});
+const router = express.Router();
+
+router.post(
+    "/api/users",
+    validateResource(createUserSchema),
+    createUserHandler
+);
 
 export default router;
