@@ -1,22 +1,24 @@
 import UserModel from '../dto/user';
 import connectDB, { prisma } from '../utils/connectDB';
-
+import BaseDAL from "./base";
 // ConnectDB
 connectDB();
 class UserDAL {
+
   async create(data: UserModel) {
-    try {
-      return await prisma.user.findFirst({
-        where: {
-          email: data.email,
-          hashed_password: data.hashed_password,
-        }
-      });
-    } catch (error) {
-      throw new Error("Неверный email или пароль");
+    const existingUser = await BaseDAL.find_user_by_email(data.email);
+
+    if (!existingUser) {
+      await prisma.user.create({ data });
+      console.log('Пользователь создан успешно.');
+      return "hired"
+    } else {
+      console.log('Пользователь с таким email уже существует.');
+      return "uvolen"
     }
+
   }
 }
 
 
-export default UserDAL
+export default new UserDAL;

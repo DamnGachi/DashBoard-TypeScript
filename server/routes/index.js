@@ -4,11 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import AuthController from "../src/controllers/Auth/user.ts";
+const user_1 = __importDefault(require("../src/controllers/auth/user"));
 const router = (0, express_1.default)();
 router.get('/', (req, res) => {
     res.send("HELLO");
 });
-// router.get('/api/service/auth/sync', AuthController.sync);
-// router.post('/api/service/auth/', AuthController.login);
+router.post('/api/register', user_1.default.createUser);
 exports.default = router;

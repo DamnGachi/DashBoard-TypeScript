@@ -11,10 +11,10 @@ const UserModel = zod_1.z.object({
 });
 // parsing
 UserModel.parse({
-    username: 'John Doe',
-    email: 'johndoe@gmail.com',
-    avatar: 'Legend of Zelda',
-    hashed_password: 'Niger',
+    username: "John Doe",
+    email: "johndoe@gmail.com",
+    avatar: "Legend of Zelda",
+    hashed_password: "Niger",
     role_id: 1
 });
 // { username: string }

@@ -2,6 +2,7 @@ import express, { Express } from 'express';
 import { json, raw, text, urlencoded } from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import router from './routes';
 
 
 
@@ -25,6 +26,9 @@ app.use(urlencoded({ extended: false }));
 app.get('/', (req, res) => {
     res.send('Express + TypeScript Server is running.');
 });
+
+app.use(router);
+
 
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

@@ -31,25 +31,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const connectDB_1 = __importStar(require("../utils/connectDB"));
+const base_1 = __importDefault(require("./base"));
 // ConnectDB
 (0, connectDB_1.default)();
 class UserDAL {
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                return yield connectDB_1.prisma.user.findFirst({
-                    where: {
-                        email: data.email,
-                        hashed_password: data.hashed_password,
-                    }
-                });
+            const existingUser = yield base_1.default.find_user_by_email(data.email);
+            if (!existingUser) {
+                yield connectDB_1.prisma.user.create({ data });
+                console.log('Пользователь создан успешно.');
+                return "hired";
             }
-            catch (error) {
-                throw new Error("Неверный email или пароль");
+            else {
+                console.log('Пользователь с таким email уже существует.');
+                return "uvolen";
             }
         });
     }
 }
-exports.default = UserDAL;
+exports.default = new UserDAL;
