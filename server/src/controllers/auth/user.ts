@@ -10,6 +10,7 @@ class RegistryController {
             res.send({ error }).status(500);
         }
     }
+    
 }
 
 export default new RegistryController();

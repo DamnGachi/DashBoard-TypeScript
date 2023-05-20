@@ -10,6 +10,7 @@ dotenv.config();
 const port = process.env.PORT;
 const app: Express = express();
 
+app.set("view engine", "ejs");
 
 app.use(cors({
     origin: '*',
@@ -24,7 +25,7 @@ app.use(raw());
 app.use(text());
 app.use(urlencoded({ extended: false }));
 app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server is running.');
+    res.render("home");
 });
 
 app.use(router);
