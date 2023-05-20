@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@types/passport": "^1.0.12"
+  },
+  "dependencies": {
+    "@types/passport-google-oauth20": "^2.0.11"
+  }
+}

@@ -12,7 +12,7 @@ if (fs.existsSync(".env")) {
 export const ENVIRONMENT = process.env.NODE_ENV;
 const prod = ENVIRONMENT === "production";
 
-export const port = (process.env.port || 3000) as number;
+export const PORT = (process.env.PORT || 3000) as number;
 
 // selecting the database URI as per the environment
 export const MONGO_URI = prod
