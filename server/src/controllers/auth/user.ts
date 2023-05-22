@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import UserDAL from '../../service/user';
+import { Request, Response } from "express";
+import UserDAL from "../../service/user";
 
 class RegistryController {
     async createUser(req: Request, res: Response) {

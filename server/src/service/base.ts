@@ -1,4 +1,4 @@
-import { prisma } from '../utils/connectDB';
+import { prisma } from "../utils/connectDB";
 
 class BaseDAL {
     async find_user_by_email(email: string) {
@@ -9,7 +9,7 @@ class BaseDAL {
                 },
             });
         } catch (error) {
-            throw new Error('Wrong email');
+            throw new Error("Wrong email");
         }
     }
 }
