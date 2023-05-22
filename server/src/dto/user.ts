@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // creating a schema for strings
 const UserModel = z.object({
@@ -11,10 +11,10 @@ const UserModel = z.object({
 
 // parsing
 UserModel.parse({
-    username: 'John Doe',
-    email: 'johndoe@gmail.com',
-    avatar: 'Legend of Zelda',
-    hashed_password: 'Niger',
+    username: "John Doe",
+    email: "johndoe@gmail.com",
+    avatar: "Legend of Zelda",
+    hashed_password: "Niger",
     role_id: 1,
 });
 

@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
-import UserDAL from '../../service/user';
+import { Request, Response } from "express";
+import UserDAL from "../../service/user";
 
 class AuthController {
     async login(req: Request, res: Response) {
         try {
-            res.render('login');
+            res.render("login");
         } catch (error) {
             res.send({ error }).status(500);
         }
