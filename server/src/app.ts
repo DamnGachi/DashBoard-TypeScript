@@ -20,12 +20,8 @@ class App {
         this.app = express();
         this.port = process.env.PORT;
         this.initialiseMiddleware();
-        // this.GoogleinitialiseMiddleware();
-    }
 
-    // private GoogleinitialiseMiddleware(): void {
-    //     // Setting up cookieSession
-    // }
+    }
 
     private initialiseMiddleware(): void {
         this.app.use(
@@ -48,7 +44,7 @@ class App {
         // Initialize passport
         this.app.use(passport.initialize());
         this.app.use(passport.session());
-        this.app.use(router);
+
 
         this.app.set("view engine", "ejs");
 
@@ -67,7 +63,9 @@ class App {
         this.app.use(text());
         this.app.get("/", (req, res) => {
             res.render("home");
+            
         });
+        this.app.use(router);
     }
 
     public listen(): void {

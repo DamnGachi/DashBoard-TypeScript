@@ -1,14 +1,11 @@
 import jwt from "jsonwebtoken";
-import UserModel from "../dto/user";
-
-
 
 interface Token extends Object {
     id: string;
     expireIn: number;
 }
-export const createToken = (user: UserModel): string => {
-    return jwt.sign({ id: user.email }, process.env.JWT_SECRET as jwt.Secret, {
+export const createToken = (email: string): string => {
+    return jwt.sign({ id: email }, process.env.JWT_SECRET as jwt.Secret, {
         expiresIn: process.env.EXPIRES_IN_SECONDS,
     });
 };

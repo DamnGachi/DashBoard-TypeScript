@@ -5,8 +5,9 @@ import AuthController from "../src/controllers/auth/googleAuth";
 
 const router: Router = express();
 
-router.post("/api/register", RegistryController.createUser);
 router.get("/logged_in", AuthController.login);
+router.post("/api/register", RegistryController.createUser);
+router.post("/api/login", RegistryController.loginUser);
 
 router.get(
     "/auth/google",

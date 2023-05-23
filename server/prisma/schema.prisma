@@ -11,16 +11,16 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
+  id              String    @id @default(uuid())
   username        String
-  email           String   @unique
+  email           String    @unique
   avatar          String
   hashed_password String
-  role_id         Int
-  registered_at   DateTime @default(now())
-  changed_at      DateTime @updatedAt
-  is_active       Boolean  @default(true)
-  is_verified     Boolean  @default(false)
+  // role_id         Int
+  // registered_at   DateTime @default(now())
+  // changed_at      DateTime @updatedAt
+  // is_active       Boolean  @default(true)
+  // is_verified     Boolean  @default(false)
 }
 
 model GoogleUser {
