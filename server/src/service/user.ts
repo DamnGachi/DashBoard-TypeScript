@@ -6,7 +6,7 @@ import {
 } from "../dto/user";
 import connectDB, { prisma } from "../utils/connectDB";
 import BaseDAL from "./base";
-import token from "../utils/token";
+import token, { isValidPassword } from "../utils/token";
 import bcrypt from "bcrypt";
 
 connectDB();
@@ -38,20 +38,40 @@ class UserDAL {
 
             return "User NOT found";
         }
-        if (await isValidPassword(existingUser, data.password)) {
+        if (await isValidPassword(existingUser, data.hashed_password)) {
             return token.createToken(data.email);
         } else {
             throw new Error("Wrong credentials given");
         }
     }
     public async update(data: UpdateUserModel) {
-        null;
+        try {
+            const updateUser = await prisma.user.update({
+                where: {
+                    email: data.email,
+                },
+                data: {
+                    username: data.username,
+                    avatar: data.avatar,
+                    hashed_password: data.hashed_password,
+                },
+            });
+            return "Successfully Updated";
+        } catch (err) {
+            return `Something went wrong ${err}`;
+        }
     }
     public async delete(data: DeleteUserModel) {
-        null;
+        try {
+            const deleteUsers = await prisma.user.delete({
+                where: {
+                    email: data.email,
+                },
+            });
+            return "Successfully deleted";
+        } catch (err) {
+            return `Something went wrong ${err}`;
+        }
     }
-}
-async function isValidPassword(user: any, password: string): Promise<boolean> {
-    return await bcrypt.compare(password, user.hashed_password);
 }
 export default new UserDAL();

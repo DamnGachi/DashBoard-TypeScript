@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-
+import bcrypt from "bcrypt";
+import { LoginModel } from "../dto/user";
 interface Token extends Object {
     id: string;
     expireIn: number;
@@ -25,5 +26,9 @@ export const verifyToken = async (
         );
     });
 };
+export async function isValidPassword(user: LoginModel, password: string): Promise<boolean> {
+    return await bcrypt.compare(password, user.hashed_password);
+}
 
-export default { createToken, verifyToken };
+
+export default { createToken, verifyToken,isValidPassword };
