@@ -1,5 +1,4 @@
 import { z } from "zod";
-import zodToJsonSchema from "zod-to-json-schema";
 
 export const createSchema = z.object({
     username: z.string(),
@@ -8,6 +7,7 @@ export const createSchema = z.object({
     hashed_password: z.string(),
     role_id: z.string(),
 });
+
 createSchema.parse({
     username: "John Doe",
     email: "johndoe@gmail.com",
@@ -20,25 +20,30 @@ const loginSchema = z.object({
     email: z.string().email(),
     hashed_password: z.string(),
 });
+
 loginSchema.parse({
     email: "johndoe@gmail.com",
     hashed_password: "Niger",
 });
+
 const updateSchema = z.object({
-    username: z.string().optional(),
+    username: z.string(),
     email: z.string().email(),
-    avatar: z.string().optional(),
-    hashed_password: z.string().min(6).optional(),
+    avatar: z.string(),
+    hashed_password: z.string().min(6),
 });
+
 updateSchema.parse({
     username: "dickjhonson" || null,
     avatar: "egg" || null,
     email: "johndoe@gmail.com",
     password: "Niger" || null,
 });
+
 const deleteSchema = z.object({
     email: z.string().email(),
 });
+
 deleteSchema.parse({
     email: "johndoe@gmail.com",
 });
