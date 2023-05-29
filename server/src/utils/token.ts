@@ -1,13 +1,12 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { LoginModel } from "../dto/user";
-interface Token extends Object {
-    id: string;
-    expireIn: number;
-}
+import Token from "./interfaces/token";
+
 export const createToken = (email: string): string => {
     return jwt.sign({ id: email }, process.env.JWT_SECRET as jwt.Secret, {
-        expiresIn: process.env.EXPIRES_IN_SECONDS,
+        expiresIn: "30d",
+        algorithm: "HS256",
     });
 };
 
@@ -26,9 +25,11 @@ export const verifyToken = async (
         );
     });
 };
-export async function isValidPassword(user: LoginModel, password: string): Promise<boolean> {
+export async function isValidPassword(
+    user: LoginModel,
+    password: string
+): Promise<boolean> {
     return await bcrypt.compare(password, user.hashed_password);
 }
 
-
-export default { createToken, verifyToken,isValidPassword };
+export default { createToken, verifyToken, isValidPassword };
