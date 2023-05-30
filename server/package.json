@@ -18,6 +18,9 @@
         "nodemon": "^2.0.22",
         "passport": "^0.6.0",
         "passport-google-oauth20": "^2.0.0",
+        "redis": "^4.6.6",
+        "socket.io": "^4.6.1",
+        "socket.io-client": "^4.6.1",
         "ts-node": "^10.9.1",
         "zod": "^3.21.4",
         "zod-to-json-schema": "^3.21.1"
@@ -32,6 +35,7 @@
         "@types/jsonwebtoken": "^9.0.2",
         "@types/passport": "^1.0.12",
         "@types/passport-google-oauth20": "^2.0.11",
+        "@types/socket.io-client": "^1.4.36",
         "concurrently": "^8.0.1",
         "cors": "^2.8.5",
         "dotenv": "^16.0.3",
