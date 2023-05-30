@@ -4,23 +4,42 @@ import dotenv from "dotenv";
 import cors from "cors";
 import router from "../routes";
 import "./config/passport";
-import { COOKIE_KEY } from "./utils/secrets";
+import { COOKIE_KEY, url } from "./utils/secrets";
 import cookieSession from "cookie-session";
 import passport from "passport";
 import session from "express-session";
 import { MemoryStore } from "express-session";
+import socketIO from "socket.io";
+import http from "http";
+import * as redis from "redis";
 
 dotenv.config();
 
 class App {
-    public app: Application;
     public port;
+    public app: Application;
+    public io: socketIO.Server;
+    public server: http.Server;
+    public redisClient: any;
 
     constructor() {
         this.app = express();
+        this.server = http.createServer(this.app);
+        this.io = new socketIO.Server(this.server);
+        this.redisClient = redis.createClient({
+            url,
+        });
+        this.io.on("connection", (socket: socketIO.Socket) => {
+            console.log("a user connected : " + socket.id);
+
+            socket.emit("message", "Hello " + socket.id);
+
+            socket.on("disconnect", function () {
+                console.log("socket disconnected : " + socket.id);
+            });
+        });
         this.port = process.env.PORT;
         this.initialiseMiddleware();
-
     }
 
     private initialiseMiddleware(): void {
@@ -44,8 +63,6 @@ class App {
         // Initialize passport
         this.app.use(passport.initialize());
         this.app.use(passport.session());
-
-
         this.app.set("view engine", "ejs");
 
         this.app.use(
@@ -62,9 +79,9 @@ class App {
         this.app.use(urlencoded({ extended: false }));
         this.app.use(text());
         this.app.get("/", (req, res) => {
-            res.render("home");
-            
+            res.render("chat");
         });
+
         this.app.use(router);
     }
 
