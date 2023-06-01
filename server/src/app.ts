@@ -9,40 +9,45 @@ import cookieSession from "cookie-session";
 import passport from "passport";
 import session from "express-session";
 import { MemoryStore } from "express-session";
-import socketIO from "socket.io";
+import { Server, Socket } from "socket.io";
 import http from "http";
 import * as redis from "redis";
+import Sockets from "./sockets";
 
 dotenv.config();
 
 class App {
     public port;
     public app: Application;
-    public io: socketIO.Server;
+    public io: Server;
     public server: http.Server;
     public redisClient: any;
 
     constructor() {
         this.app = express();
         this.server = http.createServer(this.app);
-        this.io = new socketIO.Server(this.server);
+        this.io = new Server(this.server);
         this.redisClient = redis.createClient({
             url,
         });
-        this.io.on("connection", (socket: socketIO.Socket) => {
-            console.log("a user connected : " + socket.id);
-
-            socket.emit("message", "Hello " + socket.id);
-
-            socket.on("disconnect", function () {
-                console.log("socket disconnected : " + socket.id);
-            });
-        });
         this.port = process.env.PORT;
         this.initialiseMiddleware();
+        // this.setupSocketIO(); // Moved socket.io setup to a separate method
     }
+    // public setupSocketIO(): void {
+    //     this.io.on("connection", (socket: Socket) => {
+    //         console.log("a user connected : " + socket.id);
 
+    //         socket.emit("message", "Hello " + socket.id);
+
+    //         socket.on("disconnect", function () {
+    //             console.log("socket disconnected : " + socket.id);
+    //         });
+    //     });
+    //     Sockets(this.io);
+    // }
     private initialiseMiddleware(): void {
+        this.app.use(express.static(__dirname + "/public"));
         this.app.use(
             cookieSession({
                 maxAge: 24 * 60 * 60 * 1000,
@@ -86,7 +91,7 @@ class App {
     }
 
     public listen(): void {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log(
                 `⚡️[server]: Server is running at http://localhost:${this.port}`
             );
