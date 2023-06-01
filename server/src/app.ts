@@ -32,20 +32,20 @@ class App {
         });
         this.port = process.env.PORT;
         this.initialiseMiddleware();
-        this.setupSocketIO(); // Moved socket.io setup to a separate method
+        // this.setupSocketIO(); // Moved socket.io setup to a separate method
     }
-    public setupSocketIO(): void {
-        this.io.on("connection", (socket: Socket) => {
-            console.log("a user connected : " + socket.id);
+    // public setupSocketIO(): void {
+    //     this.io.on("connection", (socket: Socket) => {
+    //         console.log("a user connected : " + socket.id);
 
-            socket.emit("message", "Hello " + socket.id);
+    //         socket.emit("message", "Hello " + socket.id);
 
-            socket.on("disconnect", function () {
-                console.log("socket disconnected : " + socket.id);
-            });
-        });
-        Sockets(this.io);
-    }
+    //         socket.on("disconnect", function () {
+    //             console.log("socket disconnected : " + socket.id);
+    //         });
+    //     });
+    //     Sockets(this.io);
+    // }
     private initialiseMiddleware(): void {
         this.app.use(express.static(__dirname + "/public"));
         this.app.use(
@@ -91,7 +91,7 @@ class App {
     }
 
     public listen(): void {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log(
                 `⚡️[server]: Server is running at http://localhost:${this.port}`
             );
