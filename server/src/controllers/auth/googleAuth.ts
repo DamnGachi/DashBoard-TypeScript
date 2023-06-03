@@ -9,6 +9,7 @@ class AuthController {
             res.send({ error }).status(500);
         }
     }
+    
 }
 
 export default new AuthController();

@@ -9,8 +9,6 @@ import BaseDAL from "./base";
 import token, { isValidPassword } from "../utils/token";
 import bcrypt from "bcrypt";
 
-connectDB();
-
 class UserDAL {
     async create(data: CreateUserModel) {
         const existingUser = await BaseDAL.find_user_by_email(data.email);

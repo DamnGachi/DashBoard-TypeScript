@@ -1,14 +1,14 @@
-const noteForm = document.querySelector("#noteForm");
+const chatForm = document.querySelector("#chatForm");
 const title = document.querySelector("#title");
 const description = document.querySelector("#description");
 
-noteForm.addEventListener("submit", (e) => {
+chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (savedId) {
-    updateNote(savedId, title.value, description.value);
+    updateChat(savedId, title.value, description.value);
   } else {
-    saveNote(title.value, description.value);
+    saveChat(title.value, description.value);
   }
 
   title.value = "";

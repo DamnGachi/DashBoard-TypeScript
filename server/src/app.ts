@@ -12,8 +12,7 @@ import { MemoryStore } from "express-session";
 import { Server, Socket } from "socket.io";
 import http from "http";
 import * as redis from "redis";
-import Sockets from "./sockets";
-
+import Sockets from "./middleware/sockets.middleware";
 dotenv.config();
 
 class App {
@@ -32,20 +31,13 @@ class App {
         });
         this.port = process.env.PORT;
         this.initialiseMiddleware();
-        // this.setupSocketIO(); // Moved socket.io setup to a separate method
+        this.setupSocketIO(); // Moved socket.io setup to a separate method
     }
-    // public setupSocketIO(): void {
-    //     this.io.on("connection", (socket: Socket) => {
-    //         console.log("a user connected : " + socket.id);
-
-    //         socket.emit("message", "Hello " + socket.id);
-
-    //         socket.on("disconnect", function () {
-    //             console.log("socket disconnected : " + socket.id);
-    //         });
-    //     });
-    //     Sockets(this.io);
-    // }
+    private setupSocketIO(): void {
+        this.io.on("connection", (socket: Socket) => {
+            Sockets(this.server)
+        });
+    }
     private initialiseMiddleware(): void {
         this.app.use(express.static(__dirname + "/public"));
         this.app.use(

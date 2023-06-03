@@ -7,13 +7,10 @@ import auth from "../src/middleware/authenticated.middleware";
 const router: Router = express();
 
 router.get("/logged_in", AuthController.login);
+router.get("/current_user", RegistryController.currentUser);
 router.post("/api/user/register", RegistryController.createUser);
 router.post("/api/user/login", RegistryController.loginUser);
-router.put(
-    "/api/user/update",
-    auth,
-    RegistryController.updateloginUser
-);
+router.put("/api/user/update", auth, RegistryController.updateloginUser);
 router.delete("/api/user/delete", auth, RegistryController.deleteUser);
 
 router.get(
@@ -28,5 +25,4 @@ router.get(
         res.send("This is the callback route");
     }
 );
-
 export default router;
