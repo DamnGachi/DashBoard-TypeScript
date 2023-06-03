@@ -1,34 +1,34 @@
 const socket = io.connect();
 
-const saveNote = (title, description) => {
-  socket.emit("client:newnote", {
+const saveChat = (title, description) => {
+  socket.emit("client:newchat", {
     title,
     description,
   });
 };
 
-const deleteNote = (id) => {
-  socket.emit("client:deletenote", id);
+const deleteChat = (id) => {
+  socket.emit("client:deletechat", id);
 };
 
-const updateNote= (id, title, description) => {
-  socket.emit("client:updatenote", {
+const updateChat= (id, title, description) => {
+  socket.emit("client:updatechat", {
     id,
     title,
     description,
   });
 };
 
-socket.on("server:loadnotes", renderNotes);
+socket.on("server:loadchats", renderChats);
 
-socket.on("server:newnote", appendNote);
+socket.on("server:newchat", appendChat);
 
-socket.on("server:selectednote", (note) => {
+socket.on("server:selectedchat", (chat) => {
   const title = document.getElementById("title");
   const description = document.getElementById("description");
 
-  title.value = note.title;
-  description.value = note.description;
+  title.value = chat.title;
+  description.value = chat.description;
 
-  savedId = note.id;
+  savedId = chat.id;
 });

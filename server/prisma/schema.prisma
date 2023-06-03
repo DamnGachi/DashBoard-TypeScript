@@ -11,17 +11,20 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
+  id              String        @id @default(uuid())
   username        String
-  email           String   @unique
+  email           String        @unique
   avatar          String
   hashed_password String
   role_id         String
-  registered_at   DateTime @default(now())
-  changed_at      DateTime @updatedAt
-  is_active       Boolean  @default(true)
-  is_verified     Boolean  @default(false)
+  registered_at   DateTime      @default(now())
+  changed_at      DateTime      @updatedAt
+  is_active       Boolean       @default(true)
+  is_verified     Boolean       @default(false)
   author          Author[]
+  owner           ChatRoom[]
+  Message         Message[]
+  MusicLibary     MusicLibary[]
 }
 
 model Author {
@@ -35,7 +38,8 @@ model MusicLibary {
   id       String @id @default(uuid())
   song     String
   libaryId String
-  // author   User   @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
 }
 
 model GoogleUser {
@@ -43,4 +47,28 @@ model GoogleUser {
   username String
   email    String
   googleId String
+}
+
+model ChatRoom {
+  id          String    @id @default(uuid())
+  name        String
+  link        String    @unique
+  avatar      String
+  description String
+  pinMessage  String
+  Owner       User?     @relation(fields: [userId], references: [id])
+  userId      String?
+  Message     Message[]
+}
+
+model Message {
+  id         String    @id @default(uuid())
+  text       String
+  entity     String
+  send_at    DateTime  @default(now())
+  changed_at DateTime  @updatedAt
+  User       User?     @relation(fields: [userId], references: [id])
+  Chat       ChatRoom? @relation(fields: [chatRoomId], references: [id])
+  chatRoomId String
+  userId     String
 }
