@@ -1,5 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { v4 as uuid } from "uuid";
+// import BaseDAL from "../service/base";
+// import token from "../utils/token";
 
 interface Room {
     id: string;
@@ -11,6 +13,7 @@ let rooms: Room[] = [];
 
 export default (server: any) => {
     const io = new Server(server);
+    // const user = BaseDAL.getUserFromToken(token);
     io.on("connection", (socket: Socket): void => {
         console.log("user connected:", socket.id);
 

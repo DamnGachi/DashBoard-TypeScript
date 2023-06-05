@@ -40,7 +40,9 @@ class RegistryController {
     }
     async currentUser(req: Request, res: Response) {
         try {
-            const result = await BaseDAL.getUserFromToken(req.body);
+            const token = req.headers.authorization;
+            
+            const result = await BaseDAL.getUserFromToken(token);
 
             res.send(result).status(200);
         } catch (error) {

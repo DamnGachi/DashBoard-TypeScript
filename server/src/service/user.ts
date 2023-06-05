@@ -4,7 +4,7 @@ import {
     UpdateUserModel,
     DeleteUserModel,
 } from "../dto/user";
-import connectDB, { prisma } from "../utils/connectDB";
+import { prisma } from "../utils/connectDB";
 import BaseDAL from "./base";
 import token, { isValidPassword } from "../utils/token";
 import bcrypt from "bcrypt";
