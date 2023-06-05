@@ -14,19 +14,33 @@ class BaseDAL {
         }
     }
 
-    async getUserFromToken(token: string): Promise<jwt.VerifyErrors | any> {
-        return new Promise((resolve, reject) => {
-            jwt.verify(
-                token,
-                process.env.JWT_SECRET as jwt.Secret,
-                (err, payload) => {
-                    if (err) return reject(err);
+    async getUserFromToken(token: any): Promise<jwt.VerifyErrors | any> {
+        return new Promise(async (resolve, reject) => {
+            if (!token) {
+                reject(new Error("Missing authorization token"));
+            }
 
-                    resolve(payload);
+            const tokenValue = token.split(" ")[1];
+            jwt.verify(
+                tokenValue,
+                process.env.JWT_SECRET as jwt.Secret,
+                async (err: any, payload: any) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        try {
+                            const user = await prisma.user.findUnique({
+                                where: { email: payload.id },
+                            });
+                            resolve(user);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    }
                 }
             );
         });
     }
 }
-
+ 
 export default new BaseDAL();

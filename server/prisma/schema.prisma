@@ -51,11 +51,11 @@ model GoogleUser {
 
 model ChatRoom {
   id          String    @id @default(uuid())
-  name        String
-  link        String    @unique
-  avatar      String
-  description String
-  pinMessage  String
+  name        String    
+  link        String?    @unique
+  avatar      String?
+  description String?
+  pinMessage  String?
   Owner       User?     @relation(fields: [userId], references: [id])
   userId      String?
   Message     Message[]
