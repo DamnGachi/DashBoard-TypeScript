@@ -17,9 +17,9 @@ class BaseDAL {
     async getUserFromToken(token: any): Promise<jwt.VerifyErrors | any> {
         return new Promise(async (resolve, reject) => {
             if (!token) {
-                reject(new Error("Missing authorization token"));
+                throw new Error("Missing authorization token");
             }
-
+            
             const tokenValue = token.split(" ")[1];
             jwt.verify(
                 tokenValue,
@@ -42,5 +42,5 @@ class BaseDAL {
         });
     }
 }
- 
+
 export default new BaseDAL();

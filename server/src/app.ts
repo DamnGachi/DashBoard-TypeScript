@@ -34,7 +34,7 @@ class App {
         this.setupSocketIO(); // Moved socket.io setup to a separate method
     }
     private setupSocketIO(): void {
-        this.io.on("connection", (socket: Socket) => {
+        this.io.on("connection", () => {
             Sockets(this.server)
         });
     }
@@ -75,10 +75,6 @@ class App {
         this.app.use(express.json());
         this.app.use(urlencoded({ extended: false }));
         this.app.use(text());
-        this.app.get("/", (req, res) => {
-            res.render("chat");
-        });
-
         this.app.use(router);
     }
 
