@@ -25,6 +25,7 @@ model User {
   owner           ChatRoom[]
   Message         Message[]
   MusicLibary     MusicLibary[]
+  ChatMember      ChatMember[]
 }
 
 model Author {
@@ -50,15 +51,16 @@ model GoogleUser {
 }
 
 model ChatRoom {
-  id          String    @id @default(uuid())
-  name        String    
-  link        String?    @unique
+  id          String       @id @default(uuid())
+  name        String
+  link        String?      @unique
   avatar      String?
   description String?
   pinMessage  String?
-  Owner       User?     @relation(fields: [userId], references: [id])
+  Owner       User?        @relation(fields: [userId], references: [id])
   userId      String?
   Message     Message[]
+  ChatMember  ChatMember[]
 }
 
 model Message {
@@ -71,4 +73,12 @@ model Message {
   Chat       ChatRoom? @relation(fields: [chatRoomId], references: [id])
   chatRoomId String
   userId     String
+}
+
+model ChatMember {
+  id     String   @id @default(uuid())
+  User   User     @relation(fields: [userId], references: [id])
+  Chat   ChatRoom @relation(fields: [chatId], references: [id])
+  userId String
+  chatId String 
 }

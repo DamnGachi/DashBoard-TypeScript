@@ -39,14 +39,15 @@ export default (server: any) => {
             socket.emit("server:selectedchat", chat);
         });
 
-        socket.on("client:updatechat", (updatedChat: Room): void => {
+        socket.on("client:joinchat", (joinedChat: Room): void => {
             rooms = rooms.map((chat: Room) => {
-                if (chat.id === updatedChat.id) {
-                    chat.title = updatedChat.title;
-                    chat.description = updatedChat.description;
-                }
+                // if (chat.id === updatedChat.id) {
+                //     chat.title = updatedChat.title;
+                //     chat.description = updatedChat.description;
+                // }
                 return chat;
             });
+            // TODO: server:loadmessages
             io.emit("server:loadchats", rooms);
         });
 

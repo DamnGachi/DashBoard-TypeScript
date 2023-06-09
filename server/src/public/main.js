@@ -6,7 +6,7 @@ chatForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (savedId) {
-    updateChat(savedId, title.value, description.value);
+    joinChat(savedId);
   } else {
     saveChat(title.value, description.value);
   }
