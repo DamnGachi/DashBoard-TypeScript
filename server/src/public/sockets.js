@@ -15,11 +15,9 @@ const deleteChat = (id) => {
     socket.emit("client:deletechat", id);
 };
 
-const updateChat = (id, title, description) => {
-    socket.emit("client:updatechat", {
+const joinChat = (id) => {
+    socket.emit("client:joinchat", {
         id,
-        title,
-        description,
     });
 };
 

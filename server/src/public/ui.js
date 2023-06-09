@@ -10,19 +10,19 @@ const chatUI = (chat) => {
           <h1 class="card-title h3">${chat.title}</h1>
           <div>
               <button class="btn btn-danger delete" data-id="${chat.id}">delete</button>
-              <button class="btn btn-secondary update" data-id="${chat.id}">update</button>
+              <button class="btn btn-secondary join" data-id="${chat.id}">join</button>
           </div>
       </div>
       <p>${chat.description}</p>
   </div>
 `;
   const btnDelete = div.querySelector(".delete");
-  const btnUpdate = div.querySelector(".update");
+  const btnJoin = div.querySelector(".join");
 
   btnDelete.addEventListener("click", () => deleteChat(btnDelete.dataset.id));
 
-  btnUpdate.addEventListener("click", () => {
-    socket.emit("client:getchat", btnUpdate.dataset.id);
+  btnJoin.addEventListener("click", () => {
+    socket.emit("client:getchat", btnJoin.dataset.id);
   });
 
   return div;
